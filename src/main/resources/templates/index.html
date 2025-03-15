@@ -1,11 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <div th:replace="~{fragments/head :: head}"></div>
 </head>
-<body>
-    INDEX PAGE
+
+<body>    
+
+    <header th:replace="~{fragments/header :: header}"></header>
+
+
+    <div class="container my-5 py-2">
+        <div th:if="${pizze.size()} > 0" th:each="pizza : ${pizze}" th:object="${pizza}">
+            <hr>
+            <div><h3>[[*{name}]]</h3></div>
+            <div>Descrizione: [[*{description}]]</div>
+            <div>Prezzo: €[[*{price}]]</div>
+            <hr>
+        </div>
+
+        <div th:unless="${pizze.size()} > 0">
+            <div>No Pizza 4 u</div>
+        </div>
+    </div>
+        
+
+    <!-- Script JS -->
+    <!-- <script th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/2.11.6/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script> -->
 </body>
 </html>

@@ -36,7 +36,10 @@ public class Pizza {
     private Double price;
 
 
-    
+    @Override
+    public String toString(){
+        return String.format("Nome Pizza: %s\nDescrizione: %s\nPrezzo: %d", name, description, price);
+    }
 
     /**
      * @return Integer return the id
