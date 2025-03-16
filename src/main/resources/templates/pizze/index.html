@@ -13,9 +13,17 @@
     <div class="container my-5 py-2">
         <div th:if="${pizze.size()} > 0" th:each="pizza : ${pizze}" th:object="${pizza}">
             <hr>
-            <div><h3>[[*{name}]]</h3></div>
-            <div>Descrizione: [[*{description}]]</div>
-            <div>Prezzo: €[[*{price}]]</div>
+            <div class="d-flex px-5 align-items-center">
+                <div class="col-8">
+                    <div><h2><a th:href="|/pizze/*{id}|">[[*{name}]]</a></h2></div>
+                    <div class="fs-4">Descrizione: [[*{description}]]</div>
+                    <div class="fs-4">Prezzo: €[[*{price}]]</div>
+                </div>
+
+                <div class="col-4 text-end">
+                    <img class="img-fluid" th:src="@{*{photoUrl}}" alt="">
+                </div>
+            </div>
             <hr>
         </div>
 
