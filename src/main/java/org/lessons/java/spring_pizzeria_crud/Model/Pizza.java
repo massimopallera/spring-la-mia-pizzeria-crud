@@ -21,7 +21,7 @@ public class Pizza {
     // Name
     @NotBlank
     @NotNull
-    @Min(value = 5, message="Pizza name must be more than 5 characters")
+    // @Min(value = 5, message="Pizza name must be more than 5 characters")
     private String name;
 
     // Description
@@ -33,6 +33,7 @@ public class Pizza {
 
     // Price
     @NotNull(message = "Price cannot be null")
+    @Min(value = 1, message = "Price must be more than 1")
     private Double price;
 
 

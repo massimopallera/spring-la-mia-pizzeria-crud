@@ -1,6 +1,7 @@
 package org.lessons.java.spring_pizzeria_crud.Controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.lessons.java.spring_pizzeria_crud.Model.Pizza;
@@ -8,9 +9,19 @@ import org.lessons.java.spring_pizzeria_crud.Repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 @Controller
 @RequestMapping("/pizze")
 public class PizzaController {
@@ -29,12 +40,36 @@ public class PizzaController {
 
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") Integer id ) {
-
-        Pizza pizza = repo.findById(id).get();
-
-        model.addAttribute("pizza", pizza);
-
+        try{
+            Pizza pizza = repo.findById(id).get();
+            model.addAttribute("pizza", pizza);
+        } catch (NoSuchElementException e) {
+            model.addAttribute("pizza", null);
+        }
         return "pizze/show";
+    }
+    
+    @GetMapping("/create")
+    public String returnForm(Model model) {
+
+        model.addAttribute("pizza", new Pizza());
+
+        return "/pizze/create";
+    }
+
+    @PostMapping("/create")
+    public String store(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult br, Model model){
+
+        if (br.hasErrors()) {
+            model.addAttribute("pizza", pizzaForm);
+            return "pizze/create";
+        }
+
+        pizzaForm.setPhotoUrl("https://placehold.co/300"); //TEMPORARY -- NEED TO UPLOAD PHOTOS
+
+        repo.save(pizzaForm);
+
+        return "redirect:/pizze/index";
     }
     
     
