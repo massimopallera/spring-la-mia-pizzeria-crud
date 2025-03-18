@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "pizze")
@@ -21,14 +22,16 @@ public class Pizza {
     // Name
     @NotBlank
     @NotNull
-    // @Min(value = 5, message="Pizza name must be more than 5 characters")
+    @Size(min = 5, max=40, message="Pizza name must be more than 5 characters")
     private String name;
 
     // Description
     @NotBlank
+    @Size(min = 5, max = 200, message = "Pizza description must be between 5 and 200 characters")
     private String description;
 
     // url photo
+    @NotBlank
     private String photoUrl;
 
     // Price

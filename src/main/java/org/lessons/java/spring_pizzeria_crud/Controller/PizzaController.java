@@ -69,7 +69,7 @@ public class PizzaController {
 
         repo.save(pizzaForm);
 
-        return "redirect:/pizze/index";
+        return "redirect:/pizze";
     }
     
     
