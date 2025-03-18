@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -71,6 +72,38 @@ public class PizzaController {
 
         return "redirect:/pizze";
     }
+
+
+
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable("id") Integer id, Model model) {
+
+        try {
+            Pizza toEdit = repo.findById(id).get();
+            toEdit.setId(id);
+            model.addAttribute("pizza", toEdit);
+        } catch (NoSuchElementException e) {
+            model.addAttribute("pizza", null);
+        }
+
+        return "/pizze/edit";
+    }
     
     
+    @PostMapping("/edit/{id}")
+    public String update(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult br, Model model){
+
+        if (br.hasErrors()) {
+            model.addAttribute("pizza", pizzaForm);
+            return "pizze/edit";
+        }
+
+        if(pizzaForm.getPhotoUrl() == null) pizzaForm.setPhotoUrl("https://placehold.co/300"); //TEMPORARY -- NEED TO UPLOAD PHOTOS
+
+        repo.save(pizzaForm);
+
+        return "redirect:/pizze";
+    }
+
+
 }

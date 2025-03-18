@@ -31,7 +31,7 @@ public class Pizza {
     private String description;
 
     // url photo
-    @NotBlank
+    // @NotBlank
     private String photoUrl;
 
     // Price

@@ -18,6 +18,11 @@
                     <div><h2><a th:href="|/pizze/*{id}|">[[*{name}]]</a></h2></div>
                     <div class="fs-4">Descrizione: [[*{description}]]</div>
                     <div class="fs-4">Prezzo: €[[*{price}]]</div>
+
+                    <a th:href="|/pizze/edit/*{id}|">Modifica</a>
+                    <form th:action="">
+                        <button></button>
+                    </form>
                 </div>
 
                 <div class="col-4 text-end">
