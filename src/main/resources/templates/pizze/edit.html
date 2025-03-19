@@ -8,24 +8,7 @@
     <header th:replace="~{fragments/header :: header}"></header>
 
     <main class="container">
-        <form method="post" th:action="@{/pizze/edit/{id}(id = ${pizza.id})}" id="pizza-form" th:object="${pizza}">
-            <ul th:if="${#fields.hasErrors()}">
-                <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="invalid-feedback"></li>
-            </ul>
-
-                
-            <label for="name">Nome Pizza: </label>
-            <input type="text" id="name" th:field="*{name}" required>
-
-            <label for="description">Descrizione Pizza: </label>
-            <input type="text" id="description" th:field="*{description}" required>
-
-            <label for="price">Prezzo in Euro: </label>
-            <input type="number" min="0" max="999" id="price" th:field="*{price}" required>
-
-            <button type="submit">Update</button>
-
-        </form>
+        <th:block th:replace="~{fragments/form :: form('/pizze/edit/' + ${pizza.id}, 'Update')}"></th:block>
     </main>
 
 </body>
