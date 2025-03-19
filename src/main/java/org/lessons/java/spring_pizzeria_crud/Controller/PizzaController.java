@@ -2,8 +2,6 @@ package org.lessons.java.spring_pizzeria_crud.Controller;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-
 import org.lessons.java.spring_pizzeria_crud.Model.Pizza;
 import org.lessons.java.spring_pizzeria_crud.Repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,26 +24,34 @@ public class PizzaController {
     @Autowired
     private PizzaRepository repo;
 
+
+    // * Return index page with all elements
     @GetMapping
     public String index(Model model) {
 
-        List<Pizza> pizze = repo.findAll();
-        model.addAttribute("pizze", pizze);
+        // * Create List of pizzas
+        List<Pizza> pizze = repo.findAll(); 
+        model.addAttribute("pizze", pizze); 
 
         return "pizze/index";
     }
 
+    // * Return one element
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") Integer id ) {
+        // * Search for element id
         try{
             Pizza pizza = repo.findById(id).get();
             model.addAttribute("pizza", pizza);
         } catch (NoSuchElementException e) {
+            // ? NoSuchElementException is thrown when the id is not found.
+            // * If tryCatch catch this Exception pizza in model will be null
             model.addAttribute("pizza", null);
         }
         return "pizze/show";
     }
     
+    // * Return form to create new Pizza, model will get a new istance for Pizza
     @GetMapping("/create")
     public String returnForm(Model model) {
 
@@ -54,26 +60,29 @@ public class PizzaController {
         return "/pizze/create";
     }
 
+    // * After form submit, pizza has his attributes. After checking all fields, new istance will be saved in db
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult br, Model model){
 
+        // * Check errors
         if (br.hasErrors()) {
             model.addAttribute("pizza", pizzaForm);
             return "pizze/create";
         }
 
-        pizzaForm.setPhotoUrl("https://placehold.co/300"); //TEMPORARY -- NEED TO UPLOAD PHOTOS
+        pizzaForm.setPhotoUrl("https://placehold.co/300"); // ! To change. It must be insert from user
 
-        repo.save(pizzaForm);
+        repo.save(pizzaForm); // * Save pizza in db
 
-        return "redirect:/pizze";
+        return "redirect:/pizze"; // * Redirect user to index page 
     }
 
 
-
+    // * Give the edit form page, with fields already filled by the element that user want to edit
     @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable("id") Integer id, Model model) {
+    public String editForm(@PathVariable Integer id, Model model) {
 
+        // * Search for Pizza in db
         try {
             Pizza toEdit = repo.findById(id).get();
             toEdit.setId(id);
@@ -85,7 +94,7 @@ public class PizzaController {
         return "/pizze/edit";
     }
     
-    
+    // * Same method of create
     @PostMapping("/edit/{id}")
     public String update(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult br, Model model){
 
@@ -94,13 +103,16 @@ public class PizzaController {
             return "pizze/edit";
         }
 
-        if(pizzaForm.getPhotoUrl() == null) pizzaForm.setPhotoUrl("https://placehold.co/300"); //TEMPORARY -- NEED TO UPLOAD PHOTOS
+        //? Check if photoUrl is not null, else give it a default link
+        if(pizzaForm.getPhotoUrl() == null) pizzaForm.setPhotoUrl("https://placehold.co/300"); 
 
         repo.save(pizzaForm);
 
         return "redirect:/pizze";
     }
 
+
+    // * Delete element
     @PostMapping("/delete/{id}")
     public String destroy(@PathVariable Integer id) {
         

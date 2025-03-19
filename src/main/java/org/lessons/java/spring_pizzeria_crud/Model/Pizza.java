@@ -16,7 +16,7 @@ public class Pizza {
     
     // ID
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY) // Create a new AI ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Create a new AI ID
     private Integer id;
     
     // Name
