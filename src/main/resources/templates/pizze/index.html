@@ -20,8 +20,8 @@
                     <div class="fs-4">Prezzo: €[[*{price}]]</div>
 
                     <a th:href="|/pizze/edit/*{id}|">Modifica</a>
-                    <form th:action="">
-                        <button></button>
+                    <form action="#" method="post" th:action="@{pizze/delete/{id}(id=*{id})}">
+                        <button>Elimina</button>
                     </form>
                 </div>
 

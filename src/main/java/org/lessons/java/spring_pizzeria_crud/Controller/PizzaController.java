@@ -14,14 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @Controller
 @RequestMapping("/pizze")
@@ -105,5 +101,12 @@ public class PizzaController {
         return "redirect:/pizze";
     }
 
+    @PostMapping("/delete/{id}")
+    public String destroy(@PathVariable Integer id) {
+        
+        repo.deleteById(id);
 
+        return "redirect:/pizze";
+    }
+    
 }
