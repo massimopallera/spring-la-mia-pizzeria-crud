@@ -18,7 +18,7 @@
 
             <div>
                 <label for="description">Descrizione Pizza: </label>
-                <input type="text" id="description" th:field="*{description}" required>
+                <input type="text" id="description" th:field="*{description}" th:errorClass="is-invalid"required>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
@@ -28,7 +28,7 @@
 
             <div>
                 <label for="photoUrl">Photo URL: </label>
-                <input type="text" id="photoUrl" th:field="*{photoUrl}" required>
+                <input type="text" id="photoUrl" th:field="*{photoUrl}" th:errorClass="is-invalid"required>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('photoUrl')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('photoUrl')}" th:text="${err}"></li>
@@ -38,7 +38,7 @@
 
             <div>
                 <label for="price">Prezzo in Euro: </label>
-                <input type="number" min="0" max="999" id="price" th:field="*{price}" required>
+                <input type="number" min="0.00" max="999.99" step="0.01" id="price" th:field="*{price}" th:errorClass="is-invalid"required>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('price')}" th:text="${err}"></li>

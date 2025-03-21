@@ -70,7 +70,7 @@ public class PizzaController {
             return "pizze/create";
         }
 
-        pizzaForm.setPhotoUrl("https://placehold.co/300"); // ! To change. It must be insert from user
+        if(pizzaForm.getPhotoUrl() == null) pizzaForm.setPhotoUrl("https://placehold.co/300"); // ! To change. It must be insert from user
 
         repo.save(pizzaForm); // * Save pizza in db
 

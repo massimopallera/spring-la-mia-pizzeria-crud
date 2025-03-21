@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,12 +32,14 @@ public class Pizza {
     private String description;
 
     // url photo
-    // @NotBlank
+    @NotBlank
+    @Size( max=255, message = "URL cannot be more than 255 characters" )
     private String photoUrl;
 
     // Price
     @NotNull(message = "Price cannot be null")
     @Min(value = 1, message = "Price must be more than 1")
+    @Max(value = 999, message = "Price must be less than 999")
     private Double price;
 
 
